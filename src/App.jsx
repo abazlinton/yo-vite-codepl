@@ -1,33 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [whiskies, setWhiskies] = useState([])
+
+  useEffect(() => {
+    fetch('http://somespringthing-env-2.eba-czr22d3f.us-east-1.elasticbeanstalk.com/whiskies')
+      .then(res => res.json())
+      .then(data => setWhiskies(data))
+  }, [])
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Alex say's hi
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <pre>
+        {JSON.stringify(whiskies, null, 2)}
+      </pre>
     </>
   )
 }
